@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-layout">
+    <%- include('../partials/sidebar') %>
+    <div class="main-content">
+        <%- include('../partials/topbar') %>
+        <div class="page-body">
+
+            <div class="page-header">
+                <div>
+                    <h1>📋 Agenda Details</h1>
+                    <p><a href="/agenda" style="color:var(--gold);">← Back to Agendas</a></p>
+                </div>
+                <span class="badge badge-<%= agenda.status.toLowerCase() %>" style="font-size:13px; padding:6px 14px;"><%= agenda.status %></span>
+            </div>
+
+            <% if (typeof query !== 'undefined') { %>
+                <% const msg = new URLSearchParams('success=' + (query||'')).get('success'); %>
+                <% if (msg) { %><div class="alert alert-success">✅ <%= msg %></div><% } %>
+            <% } %>
+
+            <div class="grid-2 mb-20">
+                <div class="card">
+                    <div class="card-header"><h2>📅 Meeting Information</h2></div>
+                    <div class="card-body">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">Meeting Title</div>
+                                <div class="detail-value fw-700"><%= agenda.title %></div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Date</div>
+                                <div class="detail-value"><%= agenda.date %></div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Time</div>
+                                <div class="detail-value"><%= agenda.time %></div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Location</div>
+                                <div class="detail-value"><%= agenda.location %></div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Days Until Meeting</div>
+                                <div class="detail-value" style="color:var(--warning); font-weight:700;"><%= agenda.daysLeft %> days</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Agenda Items -->
+                <div class="card">
+                    <div class="card-header"><h2>📝 Agenda Items (<%= agenda.items.length %>)</h2></div>
+                    <div class="card-body">
+                        <ol class="agenda-items">
+                            <% agenda.items.forEach(item => { %>
+                                <li><%= item %></li>
+                            <% }) %>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pre-Meeting Comments -->
+            <div class="card mb-20">
+                <div class="card-header">
+                    <h2>💬 Pre-Meeting Comments (<%= agenda.comments.length %>)</h2>
+                </div>
+                <div class="card-body">
+                    <% if (agenda.comments.length === 0) { %>
+                        <div class="empty-state" style="padding:30px;">
+                            <div class="empty-icon">💬</div>
+                            <h3>No Comments Yet</h3>
+                            <p>Be the first to submit a pre-meeting comment.</p>
+                        </div>
+                    <% } else { %>
+                        <% agenda.comments.forEach(c => { %>
+                        <div class="comment">
+                            <div class="flex-between">
+                                <div class="comment-author">👤 <%= c.user %></div>
+                                <div class="comment-date"><%= c.date %></div>
+                            </div>
+                            <div class="comment-text"><%= c.text %></div>
+                        </div>
+                        <% }) %>
+                    <% } %>
+                </div>
+            </div>
+
+            <!-- Submit Comment Form -->
+            <div class="card" style="max-width:620px;">
+                <div class="card-header"><h2>✉️ Submit Pre-Meeting Comment</h2></div>
+                <div class="card-body">
+                    <form action="/agenda/<%= agenda.id %>/comment" method="POST">
+                        <div class="form-group">
+                            <label>Your Name / Role</label>
+                            <input type="text" name="commenterName" placeholder="e.g. Dr. Reyes (Trustee)" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Comment / Proposed Revision</label>
+                            <textarea name="commentText" placeholder="Enter your comment or proposed revision for the agenda..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">💬 Submit Comment</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

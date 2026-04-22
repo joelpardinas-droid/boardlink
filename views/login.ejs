@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="login-page">
+    <div class="login-card">
+
+        <div class="login-brand">
+            <div class="logo-icon">📋</div>
+            <h1>BOARD<span>LINK</span></h1>
+            <p>Office of the Board Secretary &mdash; Camarines Sur Polytechnic Colleges</p>
+        </div>
+
+        <% if (typeof error !== 'undefined' && error) { %>
+            <div class="alert alert-error">⚠️ <%= error %></div>
+        <% } %>
+
+        <form action="/login" method="POST">
+
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+
+            <div class="form-group">
+                <label for="role">Login As</label>
+                <select id="role" name="role" required>
+                    <option value="">— Select Role —</option>
+                    <option value="Administrator">Administrator</option>
+                    <option value="Board Secretary">Board Secretary</option>
+                    <option value="Trustee">Trustee</option>
+                    <option value="Council Member">Council Member</option>
+                    <option value="Staff">Staff</option>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">🔐 Sign In to BOARDLINK</button>
+
+        </form>
+
+        <p class="text-muted text-center mt-16" style="font-size:12px;">
+            Authorized personnel only. Access is monitored and logged.
+        </p>
+
+    </div>
+</div>
+
+</body>
+</html>

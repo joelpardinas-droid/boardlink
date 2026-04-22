@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-layout">
+    <%- include('../partials/sidebar') %>
+    <div class="main-content">
+        <%- include('../partials/topbar') %>
+        <div class="page-body">
+            <div class="page-header">
+                <div>
+                    <h1>➕ Create New Agenda</h1>
+                    <p><a href="/agenda" style="color:var(--gold);">← Back to Agendas</a></p>
+                </div>
+            </div>
+            <div class="card" style="max-width:680px;">
+                <div class="card-header"><h2>📋 Agenda Details</h2></div>
+                <div class="card-body">
+                    <% if (typeof error !== 'undefined' && error) { %>
+                        <div class="alert alert-error">⚠️ <%= error %></div>
+                    <% } %>
+                    <% if (typeof success !== 'undefined' && success) { %>
+                        <div class="alert alert-success">✅ <%= success %></div>
+                    <% } %>
+                    <form action="/agenda/create" method="POST">
+                        <div class="form-group">
+                            <label>Meeting Title *</label>
+                            <input type="text" name="agendaTitle" placeholder="e.g. 1st Regular Board Meeting – 2026" required>
+                        </div>
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label>Meeting Date *</label>
+                                <input type="date" name="agendaDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Meeting Time *</label>
+                                <input type="time" name="agendaTime" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Location *</label>
+                            <input type="text" name="agendaLocation" placeholder="e.g. Board Room, CSPC Main Campus" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Agenda Items (one per line)</label>
+                            <textarea name="agendaItems" placeholder="Call to Order&#10;Roll Call&#10;Approval of Minutes&#10;..." style="min-height:120px;"></textarea>
+                        </div>
+                        <div class="flex gap-10 mt-16">
+                            <button type="submit" class="btn btn-primary">📋 Create &amp; Notify Members</button>
+                            <a href="/agenda" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-layout">
+    <%- include('../partials/sidebar') %>
+    <div class="main-content">
+        <%- include('../partials/topbar') %>
+        <div class="page-body">
+
+            <div class="page-header">
+                <div>
+                    <h1>🗂️ Digital Archive</h1>
+                    <p>Board resolutions, minutes, agendas, and official correspondence from 1985 to present</p>
+                </div>
+                <a href="/archive/upload" class="btn btn-gold">➕ Upload Document</a>
+            </div>
+
+            <!-- Search & Filter Bar -->
+            <form action="/archive" method="GET">
+                <div class="search-bar">
+                    <input type="text" name="search" placeholder="🔍  Search by title or category..." value="<%= search %>">
+                    <select name="type">
+                        <option value="all" <%= type==='all'?'selected':'' %>>All Types</option>
+                        <option value="Resolution"    <%= type==='Resolution'?'selected':'' %>>Resolution</option>
+                        <option value="Minutes"       <%= type==='Minutes'?'selected':'' %>>Minutes</option>
+                        <option value="Agenda"        <%= type==='Agenda'?'selected':'' %>>Agenda</option>
+                        <option value="Correspondence" <%= type==='Correspondence'?'selected':'' %>>Correspondence</option>
+                        <option value="Referenda"     <%= type==='Referenda'?'selected':'' %>>Referenda</option>
+                    </select>
+                    <select name="year">
+                        <option value="all">All Years</option>
+                        <% [2025,2024,2023,2022,2020,2015,2010,2005,2000,1990,1985].forEach(y => { %>
+                            <option value="<%= y %>" <%= year==y?'selected':'' %>><%= y %></option>
+                        <% }) %>
+                    </select>
+                    <button type="submit" class="btn btn-primary btn-sm">Search</button>
+                    <a href="/archive" class="btn btn-secondary btn-sm">Clear</a>
+                </div>
+            </form>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2>📁 Documents Found (<%= documents.length %>)</h2>
+                </div>
+                <% if (documents.length === 0) { %>
+                    <div class="empty-state">
+                        <div class="empty-icon">🔍</div>
+                        <h3>No Documents Found</h3>
+                        <p>Try adjusting your search filters.</p>
+                    </div>
+                <% } else { %>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>#</th><th>Title</th><th>Type</th><th>Year</th><th>Category</th><th>Status</th><th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% documents.forEach((doc, i) => { %>
+                            <tr>
+                                <td class="text-muted"><%= i+1 %></td>
+                                <td class="fw-700"><%= doc.title %></td>
+                                <td><%= doc.type %></td>
+                                <td><%= doc.year %></td>
+                                <td><%= doc.category %></td>
+                                <td><span class="badge badge-<%= doc.status.toLowerCase() %>"><%= doc.status %></span></td>
+                                <td><a href="/archive/<%= doc.id %>" class="btn btn-secondary btn-sm">👁 View</a></td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+                <% } %>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

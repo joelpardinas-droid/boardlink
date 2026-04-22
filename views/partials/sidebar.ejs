@@ -1,0 +1,68 @@
+<!-- views/partials/sidebar.ejs -->
+<aside class="sidebar">
+
+    <div class="sidebar-brand">
+        <div class="brand-icon">B</div>
+        <div class="brand-text">
+            <h2>BOARDLINK</h2>
+            <p>CSPC Board Secretary</p>
+        </div>
+    </div>
+
+    <nav class="sidebar-nav">
+
+        <p class="nav-section-label">Main</p>
+
+        <div class="nav-item">
+            <a href="/dashboard" class="nav-link <%= active === 'dashboard' ? 'active' : '' %>">
+                <span class="nav-icon">🏠</span> Dashboard
+            </a>
+        </div>
+
+        <p class="nav-section-label">Modules</p>
+
+        <div class="nav-item">
+            <a href="/archive" class="nav-link <%= active === 'archive' ? 'active' : '' %>">
+                <span class="nav-icon">🗂️</span> Digital Archive
+            </a>
+        </div>
+
+        <div class="nav-item">
+            <a href="/agenda" class="nav-link <%= active === 'agenda' ? 'active' : '' %>">
+                <span class="nav-icon">📋</span> Agenda Management
+            </a>
+        </div>
+
+        <div class="nav-item">
+            <a href="/meeting" class="nav-link <%= active === 'meeting' ? 'active' : '' %>">
+                <span class="nav-icon">📝</span> Meeting Records
+            </a>
+        </div>
+
+        <div class="nav-item">
+            <a href="/ocr" class="nav-link <%= active === 'ocr' ? 'active' : '' %>">
+                <span class="nav-icon">🔍</span> OCR & AI Search
+            </a>
+        </div>
+
+        <p class="nav-section-label">Administration</p>
+
+        <div class="nav-item">
+            <a href="/users" class="nav-link <%= active === 'users' ? 'active' : '' %>">
+                <span class="nav-icon">👥</span> User Management
+            </a>
+        </div>
+
+        <div class="nav-item">
+            <a href="/about" class="nav-link <%= active === 'about' ? 'active' : '' %>">
+                <span class="nav-icon">ℹ️</span> About BOARDLINK
+            </a>
+        </div>
+
+    </nav>
+
+    <div class="sidebar-footer">
+        BOARDLINK v1.0 &copy; CSPC 2026
+    </div>
+
+</aside>

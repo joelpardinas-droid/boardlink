@@ -1,0 +1,13 @@
+{
+  "name": "boardlink",
+  "version": "1.0.0",
+  "description": "BOARDLINK: An Integrated Digital Archiving and Board Governance Platform - CSPC",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.22.1"
+  }
+}

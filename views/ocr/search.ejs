@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-layout">
+    <%- include('../partials/sidebar') %>
+    <div class="main-content">
+        <%- include('../partials/topbar') %>
+        <div class="page-body">
+            <div class="page-header">
+                <div><h1>🤖 AI-Powered Document Search</h1><p>Intelligent query matching beyond simple keyword filtering</p></div>
+                <a href="/ocr" style="color:var(--gold);">← OCR Processing</a>
+            </div>
+
+            <form action="/ocr/search" method="GET">
+                <div class="search-bar" style="margin-bottom:24px;">
+                    <input type="text" name="query" placeholder="🔍  Search resolutions, minutes, agendas, correspondence..." value="<%= query %>" style="font-size:16px; padding:14px 18px;">
+                    <button type="submit" class="btn btn-primary">🔍 Search</button>
+                    <% if (query) { %><a href="/ocr/search" class="btn btn-secondary">Clear</a><% } %>
+                </div>
+            </form>
+
+            <% if (query && results.length === 0) { %>
+                <div class="empty-state">
+                    <div class="empty-icon">🔍</div>
+                    <h3>No Results for "<%= query %>"</h3>
+                    <p>Try different keywords or browse the <a href="/archive" style="color:var(--gold);">Digital Archive</a>.</p>
+                </div>
+            <% } else if (results.length > 0) { %>
+                <div class="card">
+                    <div class="card-header"><h2>🔍 Search Results for "<%= query %>" — <%= results.length %> found</h2></div>
+                    <div style="display:flex; flex-direction:column; gap:1px;">
+                        <% results.forEach(doc => { %>
+                        <div style="padding:18px 22px; border-bottom:1px solid var(--gray-100); transition:background 0.15s;" onmouseover="this.style.background='var(--off-white)'" onmouseout="this.style.background=''">
+                            <div class="flex-between">
+                                <div>
+                                    <div style="font-size:15px; font-weight:700; color:var(--navy); margin-bottom:4px;"><%= doc.title %></div>
+                                    <div class="text-muted" style="font-size:13px; margin-bottom:8px;"><%= doc.snippet %></div>
+                                    <div style="display:flex; gap:8px;">
+                                        <span class="badge badge-active"><%= doc.type %></span>
+                                        <span class="text-muted">📅 <%= doc.year %></span>
+                                    </div>
+                                </div>
+                                <a href="/archive/<%= doc.id %>" class="btn btn-secondary btn-sm">View</a>
+                            </div>
+                        </div>
+                        <% }) %>
+                    </div>
+                </div>
+            <% } else { %>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="empty-state">
+                            <div class="empty-icon">🤖</div>
+                            <h3>AI Search Ready</h3>
+                            <p>Enter keywords to search across all archived governance documents using intelligent AI matching.</p>
+                            <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:16px;">
+                                <% ['board resolution', 'academic calendar', 'CHED', 'budget', 'minutes'].forEach(s => { %>
+                                    <a href="/ocr/search?query=<%= s %>" class="btn btn-secondary btn-sm">🔍 <%= s %></a>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

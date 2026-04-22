@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-layout">
+    <%- include('../partials/sidebar') %>
+    <div class="main-content">
+        <%- include('../partials/topbar') %>
+        <div class="page-body">
+            <div class="page-header">
+                <div><h1>✅ OCR Result</h1><p><a href="/ocr" style="color:var(--gold);">← Process Another Document</a></p></div>
+                <div class="flex gap-10">
+                    <button class="btn btn-gold btn-sm">💾 Save to Archive</button>
+                    <button class="btn btn-secondary btn-sm">⬇️ Download Text</button>
+                </div>
+            </div>
+
+            <div class="alert alert-success">✅ OCR processing completed for: <strong><%= documentName %></strong></div>
+
+            <div class="grid-2 mb-20">
+                <div class="card">
+                    <div class="card-header"><h2>📊 OCR Metadata</h2></div>
+                    <div class="card-body">
+                        <div class="detail-grid">
+                            <div class="detail-item"><div class="detail-label">Document Type</div><div class="detail-value"><%= metadata.documentType %></div></div>
+                            <div class="detail-item"><div class="detail-label">Year</div><div class="detail-value"><%= metadata.year %></div></div>
+                            <div class="detail-item"><div class="detail-label">Institution</div><div class="detail-value"><%= metadata.institution %></div></div>
+                            <div class="detail-item"><div class="detail-label">Processed On</div><div class="detail-value"><%= metadata.extractedOn %></div></div>
+                            <div class="detail-item"><div class="detail-label">Word Count</div><div class="detail-value"><%= metadata.wordCount %> words</div></div>
+                            <div class="detail-item"><div class="detail-label">Confidence</div><div class="detail-value" style="color:var(--success); font-weight:700;"><%= metadata.confidence %></div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h2>🤖 Next Steps</h2></div>
+                    <div class="card-body">
+                        <div style="display:flex; flex-direction:column; gap:10px;">
+                            <a href="/archive/upload" class="btn btn-primary">💾 Save to Digital Archive</a>
+                            <a href="/ocr/search" class="btn btn-secondary">🔍 Search Similar Documents</a>
+                            <a href="/meeting/summary" class="btn btn-secondary">📄 Generate Summary</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header"><h2>📃 Extracted Text</h2></div>
+                <div class="card-body">
+                    <div class="ocr-result"><%= extractedText %></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

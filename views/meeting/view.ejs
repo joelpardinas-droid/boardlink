@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-layout">
+    <%- include('../partials/sidebar') %>
+    <div class="main-content">
+        <%- include('../partials/topbar') %>
+        <div class="page-body">
+
+            <div class="page-header">
+                <div>
+                    <h1>📝 Meeting Details</h1>
+                    <p><a href="/meeting" style="color:var(--gold);">← Back to Meetings</a></p>
+                </div>
+                <span class="badge badge-<%= meeting.status.toLowerCase() %>" style="font-size:13px; padding:6px 14px;"><%= meeting.status %></span>
+            </div>
+
+            <div class="grid-2 mb-20">
+                <div class="card">
+                    <div class="card-header"><h2>📅 Meeting Info</h2></div>
+                    <div class="card-body">
+                        <div class="detail-grid">
+                            <div class="detail-item"><div class="detail-label">Title</div><div class="detail-value fw-700"><%= meeting.title %></div></div>
+                            <div class="detail-item"><div class="detail-label">Date</div><div class="detail-value"><%= meeting.date %></div></div>
+                            <div class="detail-item"><div class="detail-label">Time</div><div class="detail-value"><%= meeting.time %></div></div>
+                            <div class="detail-item"><div class="detail-label">Location</div><div class="detail-value"><%= meeting.location %></div></div>
+                            <div class="detail-item"><div class="detail-label">Quorum</div><div class="detail-value"><%= meeting.quorum %></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h2>👥 Attendance</h2></div>
+                    <div class="card-body">
+                        <% if (meeting.attendees.length === 0) { %>
+                            <div class="text-muted">Attendance not yet recorded.</div>
+                        <% } else { %>
+                            <div style="margin-bottom:14px;">
+                                <div class="detail-label">Present (<%= meeting.attendees.length %>)</div>
+                                <% meeting.attendees.forEach(a => { %>
+                                    <div style="padding:5px 0; font-size:14px; border-bottom:1px solid var(--gray-100);">✅ <%= a %></div>
+                                <% }) %>
+                            </div>
+                            <% if (meeting.absent.length > 0) { %>
+                                <div class="detail-label">Absent (<%= meeting.absent.length %>)</div>
+                                <% meeting.absent.forEach(a => { %>
+                                    <div style="padding:5px 0; font-size:14px; color:var(--danger);">❌ <%= a %></div>
+                                <% }) %>
+                            <% } %>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+            <% if (meeting.motions.length > 0) { %>
+            <div class="card mb-20">
+                <div class="card-header"><h2>🗳️ Motions & Decisions</h2></div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead><tr><th>#</th><th>Motion</th><th>Result</th></tr></thead>
+                        <tbody>
+                            <% meeting.motions.forEach((m, i) => { %>
+                            <tr>
+                                <td><%= i+1 %></td>
+                                <td class="fw-700"><%= m.motion %></td>
+                                <td><span class="badge badge-active"><%= m.result %></span></td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <% } %>
+
+            <div class="flex gap-10">
+                <a href="/meeting/transcription" class="btn btn-primary">🎙️ View Transcript</a>
+                <a href="/meeting/summary" class="btn btn-gold">📄 View AI Summary</a>
+                <button class="btn btn-secondary">📧 Distribute Minutes</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

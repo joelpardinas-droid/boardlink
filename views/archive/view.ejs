@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-layout">
+    <%- include('../partials/sidebar') %>
+    <div class="main-content">
+        <%- include('../partials/topbar') %>
+        <div class="page-body">
+
+            <div class="page-header">
+                <div>
+                    <h1>📄 Document Details</h1>
+                    <p><a href="/archive" style="color:var(--gold);">← Back to Archive</a></p>
+                </div>
+                <div class="flex gap-10">
+                    <a href="/ocr" class="btn btn-secondary btn-sm">🔍 Process with OCR</a>
+                    <button class="btn btn-gold btn-sm">⬇️ Download</button>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header"><h2>📋 Document Information</h2></div>
+                    <div class="card-body">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">Title</div>
+                                <div class="detail-value fw-700"><%= document.title %></div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Document Type</div>
+                                <div class="detail-value"><%= document.type %></div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Year</div>
+                                <div class="detail-value"><%= document.year %></div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Date</div>
+                                <div class="detail-value"><%= document.date %></div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Category</div>
+                                <div class="detail-value"><%= document.category %></div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Status</div>
+                                <div class="detail-value">
+                                    <span class="badge badge-<%= document.status.toLowerCase() %>"><%= document.status %></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h2>🤖 AI & OCR Status</h2></div>
+                    <div class="card-body">
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">OCR Processed</div>
+                                <div class="detail-value"><span class="badge badge-active">✅ Yes</span></div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Searchable</div>
+                                <div class="detail-value"><span class="badge badge-active">✅ Yes</span></div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Document ID</div>
+                                <div class="detail-value">#<%= document.id.toString().padStart(4,'0') %></div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">Indexed</div>
+                                <div class="detail-value"><span class="badge badge-active">✅ Yes</span></div>
+                            </div>
+                        </div>
+                        <div class="mt-16">
+                            <a href="/ocr/search?query=<%= encodeURIComponent(document.title) %>" class="btn btn-secondary btn-sm">🔍 Find Similar Documents</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-20">
+                <div class="card-header"><h2>📃 Document Preview (OCR Extracted Text)</h2></div>
+                <div class="card-body">
+                    <div class="doc-content">REPUBLIC OF THE PHILIPPINES
+CAMARINES SUR POLYTECHNIC COLLEGES
+Nabua, Camarines Sur
+
+<%= document.title.toUpperCase() %>
+
+SERIES OF <%= document.year %>
+
+WHEREAS, the Board of Trustees of Camarines Sur Polytechnic Colleges convened in its Regular Session held at the Board Room of the institution on <%= document.date %>;
+
+WHEREAS, the matters discussed during the session required formal board action and resolution;
+
+NOW THEREFORE, BE IT RESOLVED, as it is hereby resolved by the Board of Trustees of Camarines Sur Polytechnic Colleges, to formally adopt and approve the subject matter as presented during the session.
+
+DONE in the City of Nabua, Camarines Sur, Philippines.
+
+[Signed]
+Board Secretary
+Camarines Sur Polytechnic Colleges</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

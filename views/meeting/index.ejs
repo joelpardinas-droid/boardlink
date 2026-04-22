@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-layout">
+    <%- include('../partials/sidebar') %>
+    <div class="main-content">
+        <%- include('../partials/topbar') %>
+        <div class="page-body">
+
+            <div class="page-header">
+                <div>
+                    <h1>📝 Meeting Records</h1>
+                    <p>Board meeting documentation, AI transcription, and AI-generated summaries</p>
+                </div>
+                <div class="flex gap-10">
+                    <a href="/meeting/transcription" class="btn btn-secondary">🎙️ AI Transcription</a>
+                    <a href="/meeting/summary" class="btn btn-gold">📄 AI Summary</a>
+                </div>
+            </div>
+
+            <div style="display:flex; flex-direction:column; gap:16px;">
+                <% meetings.forEach(meeting => { %>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="flex-between">
+                            <div>
+                                <div style="font-size:17px; font-weight:700; color:var(--navy); margin-bottom:6px;">
+                                    📅 <%= meeting.title %>
+                                </div>
+                                <div class="text-muted">
+                                    📆 <%= meeting.date %> &nbsp;|&nbsp; 🕐 <%= meeting.time %> &nbsp;|&nbsp; 📍 <%= meeting.location %>
+                                </div>
+                                <div class="mt-16" style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+                                    <span class="badge badge-<%= meeting.status.toLowerCase() %>"><%= meeting.status %></span>
+                                    <% if (meeting.transcriptReady) { %><span class="badge badge-active">🎙️ Transcript Ready</span><% } %>
+                                    <% if (meeting.summaryReady) { %><span class="badge badge-active">📄 Summary Ready</span><% } %>
+                                    <% if (meeting.attendees.length > 0) { %>
+                                        <span class="text-muted">👥 <%= meeting.attendees.length %> attendees</span>
+                                    <% } %>
+                                </div>
+                            </div>
+                            <a href="/meeting/<%= meeting.id %>" class="btn btn-primary btn-sm">👁 View Details</a>
+                        </div>
+                    </div>
+                </div>
+                <% }) %>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-layout">
+    <%- include('partials/sidebar') %>
+    <div class="main-content">
+        <%- include('partials/topbar') %>
+        <div class="page-body">
+            <div class="page-header"><div><h1>ℹ️ About BOARDLINK</h1><p>System information and module overview</p></div></div>
+
+            <div class="grid-2 mb-20">
+                <div class="card">
+                    <div class="card-header"><h2>📋 System Overview</h2></div>
+                    <div class="card-body">
+                        <div style="font-size:15px; line-height:1.8; color:var(--gray-700);">
+                            <strong style="color:var(--navy);">BOARDLINK</strong> is an Integrated Digital Archiving and Board Governance Platform developed for the Office of the Board Secretary of Camarines Sur Polytechnic Colleges (CSPC).
+                        </div>
+                        <div class="detail-grid mt-16">
+                            <div class="detail-item"><div class="detail-label">Version</div><div class="detail-value">1.0.0</div></div>
+                            <div class="detail-item"><div class="detail-label">Institution</div><div class="detail-value">CSPC</div></div>
+                            <div class="detail-item"><div class="detail-label">Coverage</div><div class="detail-value">1985 – Present</div></div>
+                            <div class="detail-item"><div class="detail-label">Platform</div><div class="detail-value">Web-Based (Node.js)</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header"><h2>👨‍💻 Developers</h2></div>
+                    <div class="card-body">
+                        <% ['Jimuel S. Baal','Frances M. Gastilo','Joel L. Pardinas','Cedrick R. Radasa'].forEach(dev => { %>
+                        <div style="padding:10px 0; border-bottom:1px solid var(--gray-100); display:flex; align-items:center; gap:10px;">
+                            <div style="width:32px; height:32px; border-radius:50%; background:var(--navy); display:flex; align-items:center; justify-content:center; color:var(--gold); font-size:12px; font-weight:700;"><%= dev.charAt(0) %></div>
+                            <span style="font-weight:600; font-size:14px;"><%= dev %></span>
+                        </div>
+                        <% }) %>
+                        <div class="text-muted mt-16" style="font-size:13px;">BSIT | College of Computer Studies | April 2026</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header"><h2>🧩 System Modules</h2></div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead><tr><th>#</th><th>Module</th><th>Description</th><th>Access</th></tr></thead>
+                        <tbody>
+                            <% [
+                                ['2.1','Digital Archiving','Store, index, and retrieve governance documents from 1985–present','/archive'],
+                                ['2.2','Agenda Management','Upload and distribute meeting agendas at least 5 days in advance','/agenda'],
+                                ['2.3','Pre-Meeting Review','Submit and consolidate comments before board sessions','/agenda'],
+                                ['2.4','OCR Processing','Convert scanned documents to searchable digital text','/ocr'],
+                                ['2.5','AI-Powered Search','Intelligent document search beyond keyword filtering','/ocr/search'],
+                                ['2.6','AI Transcription','Auto-generate text transcripts of board meetings','/meeting/transcription'],
+                                ['2.7','AI Summary','Generate concise summaries of meeting discussions','/meeting/summary'],
+                                ['2.8','User Management','RBAC-based access control for all system users','/users'],
+                            ].forEach(([num, name, desc, link]) => { %>
+                            <tr>
+                                <td class="text-muted"><%= num %></td>
+                                <td class="fw-700"><%= name %></td>
+                                <td class="text-muted" style="font-size:13px;"><%= desc %></td>
+                                <td><a href="<%= link %>" class="btn btn-secondary btn-sm">Open</a></td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

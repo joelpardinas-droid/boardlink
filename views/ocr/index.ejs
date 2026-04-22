@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-layout">
+    <%- include('../partials/sidebar') %>
+    <div class="main-content">
+        <%- include('../partials/topbar') %>
+        <div class="page-body">
+            <div class="page-header">
+                <div><h1>🔍 OCR Processing</h1><p>Convert scanned physical documents into machine-readable and searchable digital text</p></div>
+                <a href="/ocr/search" class="btn btn-gold">🤖 AI-Powered Search</a>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header"><h2>📤 Submit Document for OCR</h2></div>
+                    <div class="card-body">
+                        <% if (typeof error !== 'undefined' && error) { %>
+                            <div class="alert alert-error">⚠️ <%= error %></div>
+                        <% } %>
+                        <form action="/ocr/process" method="POST">
+                            <div class="form-group">
+                                <label>Document Name *</label>
+                                <input type="text" name="documentName" placeholder="e.g. Board Resolution No. 2000-001" required>
+                            </div>
+                            <div class="grid-2">
+                                <div class="form-group">
+                                    <label>Document Year *</label>
+                                    <input type="number" name="documentYear" placeholder="e.g. 2000" min="1985" max="2026" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Document Type *</label>
+                                    <select name="documentType" required>
+                                        <option value="">— Select —</option>
+                                        <option value="Resolution">Resolution</option>
+                                        <option value="Minutes">Minutes</option>
+                                        <option value="Agenda">Agenda</option>
+                                        <option value="Correspondence">Correspondence</option>
+                                        <option value="Referenda">Referenda</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Upload Scanned Image (JPG/PNG/PDF)</label>
+                                <input type="file" name="scanFile" accept=".jpg,.jpeg,.png,.pdf" style="padding:8px; background:var(--white);">
+                            </div>
+                            <button type="submit" class="btn btn-primary">🔍 Process with OCR</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h2>ℹ️ About OCR in BOARDLINK</h2></div>
+                    <div class="card-body">
+                        <div style="display:flex; flex-direction:column; gap:14px;">
+                            <div style="padding:14px; background:var(--off-white); border-radius:8px; border-left:3px solid var(--gold);">
+                                <div style="font-weight:700; font-size:14px; margin-bottom:4px;">📜 What is OCR?</div>
+                                <div class="text-muted" style="font-size:13px;">Optical Character Recognition converts scanned images of printed or handwritten text into machine-readable digital text.</div>
+                            </div>
+                            <div style="padding:14px; background:var(--off-white); border-radius:8px; border-left:3px solid var(--navy-lite);">
+                                <div style="font-weight:700; font-size:14px; margin-bottom:4px;">📁 Supported Documents</div>
+                                <div class="text-muted" style="font-size:13px;">Board resolutions, meeting minutes, official correspondence, and referenda from 1985 to present.</div>
+                            </div>
+                            <div style="padding:14px; background:var(--off-white); border-radius:8px; border-left:3px solid var(--success);">
+                                <div style="font-weight:700; font-size:14px; margin-bottom:4px;">✅ Best Practices</div>
+                                <div class="text-muted" style="font-size:13px;">Use high-resolution scans (300 DPI+) for best OCR accuracy. Clean, unwrinkled documents yield highest confidence scores.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

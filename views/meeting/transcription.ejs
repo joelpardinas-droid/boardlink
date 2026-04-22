@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-layout">
+    <%- include('../partials/sidebar') %>
+    <div class="main-content">
+        <%- include('../partials/topbar') %>
+        <div class="page-body">
+            <div class="page-header">
+                <div><h1>🎙️ AI Meeting Transcription</h1><p>Automatically generate text transcripts of board meeting discussions</p></div>
+                <a href="/meeting" style="color:var(--gold);">← Back to Meetings</a>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header"><h2>🎤 Generate Transcript</h2></div>
+                    <div class="card-body">
+                        <% if (typeof success !== 'undefined' && success) { %>
+                            <div class="alert alert-success">✅ <%= success %></div>
+                        <% } %>
+                        <form action="/meeting/transcription" method="POST">
+                            <div class="form-group">
+                                <label>Meeting Title</label>
+                                <input type="text" name="meetingTitle" placeholder="e.g. 1st Regular Board Meeting 2026" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Meeting Date</label>
+                                <input type="date" name="meetingDate" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Upload Audio File (MP3/WAV)</label>
+                                <input type="file" name="audioFile" accept="audio/*" style="padding:8px; background:var(--white);">
+                            </div>
+                            <div class="alert alert-warning" style="font-size:13px;">
+                                ⚠️ Transcription accuracy depends on audio quality. Clear recordings yield best results.
+                            </div>
+                            <button type="submit" class="btn btn-primary">🤖 Generate Transcript with AI</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h2>📄 Transcript Output</h2></div>
+                    <div class="card-body">
+                        <% if (typeof transcript !== 'undefined' && transcript) { %>
+                            <div class="ocr-result"><%= transcript %></div>
+                            <div class="flex gap-10 mt-16">
+                                <button class="btn btn-gold btn-sm">⬇️ Download Transcript</button>
+                                <a href="/meeting/summary" class="btn btn-secondary btn-sm">📄 Generate Summary</a>
+                            </div>
+                        <% } else { %>
+                            <div class="empty-state">
+                                <div class="empty-icon">🎙️</div>
+                                <h3>No Transcript Yet</h3>
+                                <p>Submit an audio file to generate the AI transcript.</p>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-layout">
+    <%- include('../partials/sidebar') %>
+    <div class="main-content">
+        <%- include('../partials/topbar') %>
+        <div class="page-body">
+
+            <div class="page-header">
+                <div>
+                    <h1>➕ Upload Document</h1>
+                    <p><a href="/archive" style="color:var(--gold);">← Back to Archive</a></p>
+                </div>
+            </div>
+
+            <div class="card" style="max-width:680px;">
+                <div class="card-header"><h2>📤 Document Upload Form</h2></div>
+                <div class="card-body">
+
+                    <% if (typeof error !== 'undefined' && error) { %>
+                        <div class="alert alert-error">⚠️ <%= error %></div>
+                    <% } %>
+                    <% if (typeof success !== 'undefined' && success) { %>
+                        <div class="alert alert-success">✅ <%= success %></div>
+                    <% } %>
+
+                    <form action="/archive/upload" method="POST">
+
+                        <div class="form-group">
+                            <label>Document Title *</label>
+                            <input type="text" name="docTitle" placeholder="e.g. Board Resolution No. 2026-001" required>
+                        </div>
+
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label>Document Type *</label>
+                                <select name="docType" required>
+                                    <option value="">— Select Type —</option>
+                                    <option value="Resolution">Resolution</option>
+                                    <option value="Minutes">Minutes</option>
+                                    <option value="Agenda">Agenda</option>
+                                    <option value="Correspondence">Correspondence</option>
+                                    <option value="Referenda">Referenda</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Year *</label>
+                                <input type="number" name="docYear" placeholder="e.g. 2026" min="1985" max="2026" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Category *</label>
+                            <select name="docCategory" required>
+                                <option value="">— Select Category —</option>
+                                <option value="Institutional">Institutional</option>
+                                <option value="Academic">Academic</option>
+                                <option value="Finance">Finance</option>
+                                <option value="Meeting">Meeting</option>
+                                <option value="External">External</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea name="docDescription" placeholder="Brief description of the document..."></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Upload File (PDF/Image)</label>
+                            <input type="file" name="docFile" style="padding:8px; background:var(--white);">
+                        </div>
+
+                        <div class="flex gap-10 mt-16">
+                            <button type="submit" class="btn btn-primary">📤 Upload &amp; Process with OCR</button>
+                            <a href="/archive" class="btn btn-secondary">Cancel</a>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

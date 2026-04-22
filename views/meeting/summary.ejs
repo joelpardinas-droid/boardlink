@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-layout">
+    <%- include('../partials/sidebar') %>
+    <div class="main-content">
+        <%- include('../partials/topbar') %>
+        <div class="page-body">
+            <div class="page-header">
+                <div><h1>📄 AI Meeting Summary</h1><p>Generate concise AI summaries of board meeting discussions and reports</p></div>
+                <a href="/meeting" style="color:var(--gold);">← Back to Meetings</a>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header"><h2>⚙️ Generate Summary</h2></div>
+                    <div class="card-body">
+                        <% if (typeof success !== 'undefined' && success) { %>
+                            <div class="alert alert-success">✅ <%= success %></div>
+                        <% } %>
+                        <form action="/meeting/summary" method="POST">
+                            <div class="form-group">
+                                <label>Meeting Reference</label>
+                                <input type="text" name="meetingRef" placeholder="e.g. 4th Regular Board Meeting 2025" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Source</label>
+                                <select name="summarySource">
+                                    <option value="transcript">From AI Transcript</option>
+                                    <option value="minutes">From Uploaded Minutes</option>
+                                    <option value="recording">From Audio Recording</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">🤖 Generate AI Summary</button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h2>📋 Summary Output</h2></div>
+                    <div class="card-body">
+                        <% if (typeof summary !== 'undefined' && summary) { %>
+                            <div class="doc-content" style="font-size:14px; line-height:1.9;"><%= summary %></div>
+                            <div class="flex gap-10 mt-16">
+                                <button class="btn btn-gold btn-sm">⬇️ Download Summary</button>
+                                <button class="btn btn-secondary btn-sm">📧 Distribute to Members</button>
+                            </div>
+                        <% } else { %>
+                            <div class="empty-state">
+                                <div class="empty-icon">📄</div>
+                                <h3>No Summary Yet</h3>
+                                <p>Submit a request to generate the AI-powered meeting summary.</p>
+                            </div>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

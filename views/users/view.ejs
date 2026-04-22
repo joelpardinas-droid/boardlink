@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-layout">
+    <%- include('../partials/sidebar') %>
+    <div class="main-content">
+        <%- include('../partials/topbar') %>
+        <div class="page-body">
+            <div class="page-header">
+                <div><h1>👤 User Profile</h1><p><a href="/users" style="color:var(--gold);">← Back to Users</a></p></div>
+                <span class="badge badge-<%= user.status.toLowerCase() %>" style="font-size:13px; padding:6px 14px;"><%= user.status %></span>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header"><h2>👤 User Information</h2></div>
+                    <div class="card-body">
+                        <div style="display:flex; align-items:center; gap:16px; margin-bottom:20px;">
+                            <div style="width:60px; height:60px; border-radius:50%; background:linear-gradient(135deg, var(--navy) 0%, var(--navy-lite) 100%); display:flex; align-items:center; justify-content:center; color:var(--gold); font-size:22px; font-weight:800;">
+                                <%= user.name.charAt(0) %>
+                            </div>
+                            <div>
+                                <div style="font-size:18px; font-weight:800; color:var(--navy);"><%= user.name %></div>
+                                <div class="text-muted">@<%= user.username %></div>
+                            </div>
+                        </div>
+                        <div class="detail-grid">
+                            <div class="detail-item"><div class="detail-label">Role</div><div class="detail-value"><span class="badge badge-upcoming"><%= user.role %></span></div></div>
+                            <div class="detail-item"><div class="detail-label">Status</div><div class="detail-value"><span class="badge badge-<%= user.status.toLowerCase() %>"><%= user.status %></span></div></div>
+                            <div class="detail-item"><div class="detail-label">Username</div><div class="detail-value">@<%= user.username %></div></div>
+                            <div class="detail-item"><div class="detail-label">Last Login</div><div class="detail-value"><%= user.lastLogin %></div></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h2>🔐 Access Permissions</h2></div>
+                    <div class="card-body">
+                        <div class="detail-label" style="margin-bottom:10px;">Permissions granted to <%= user.role %></div>
+                        <div>
+                            <% permissions.forEach(perm => { %>
+                                <span class="perm-tag"><%= perm %></span>
+                            <% }) %>
+                        </div>
+                        <div class="mt-16 alert alert-warning" style="font-size:13px;">
+                            🔒 Permissions are controlled by Role-Based Access Control (RBAC). Contact the Administrator to modify roles.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

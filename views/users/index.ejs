@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="app-layout">
+    <%- include('../partials/sidebar') %>
+    <div class="main-content">
+        <%- include('../partials/topbar') %>
+        <div class="page-body">
+
+            <div class="page-header">
+                <div><h1>👥 User Management</h1><p>Role-Based Access Control (RBAC) — manage users and their permissions</p></div>
+                <a href="/users/add" class="btn btn-gold">➕ Add User</a>
+            </div>
+
+            <!-- RBAC Role Summary -->
+            <div class="card mb-20">
+                <div class="card-header"><h2>🔐 RBAC Permission Matrix</h2></div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr><th>Role</th><th>Permissions</th></tr>
+                        </thead>
+                        <tbody>
+                            <% Object.entries(rolePermissions).forEach(([role, perms]) => { %>
+                            <tr>
+                                <td class="fw-700"><%= role %></td>
+                                <td><% perms.forEach(p => { %><span class="perm-tag"><%= p %></span><% }) %></td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Users Table -->
+            <div class="card">
+                <div class="card-header"><h2>👤 System Users (<%= users.length %>)</h2></div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr><th>#</th><th>Name</th><th>Username</th><th>Role</th><th>Status</th><th>Last Login</th><th>Action</th></tr>
+                        </thead>
+                        <tbody>
+                            <% users.forEach((user, i) => { %>
+                            <tr>
+                                <td class="text-muted"><%= i+1 %></td>
+                                <td class="fw-700"><%= user.name %></td>
+                                <td class="text-muted">@<%= user.username %></td>
+                                <td><span class="badge badge-upcoming"><%= user.role %></span></td>
+                                <td><span class="badge badge-<%= user.status.toLowerCase() %>"><%= user.status %></span></td>
+                                <td class="text-muted"><%= user.lastLogin %></td>
+                                <td><a href="/users/<%= user.id %>" class="btn btn-secondary btn-sm">👁 View</a></td>
+                            </tr>
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
